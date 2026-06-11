@@ -1,0 +1,248 @@
+{
+	"name": "workspace-mange",
+	"version": "0.0.6",
+	"displayName": "workspace-mange",
+	"description": "A plugin for managing folder in VSCode.",
+	"publisher": "Liangxioa",
+	"keywords": [
+		"工作区",
+		"workspace",
+		"项目管理"
+	],
+	"scripts": {
+		"build": "vsce package"
+	},
+	"engines": {
+		"vscode": "^1.80.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"*"
+	],
+	"main": "./src/index.js",
+	"contributes": {
+		"configuration": {
+			"title": "工作区管理",
+			"properties": {
+				"workspaceMange.gitRootDirs": {
+					"type": "array",
+					"items": {
+						"type": "string"
+					},
+					"default": [],
+					"description": "用于自动扫描 git 仓库的根目录列表。指定后，可通过命令\"扫描 Git 目录\"将目录下所有 git 仓库合并到项目列表中。"
+				},
+				"workspaceMange.scanMaxDepth": {
+					"type": "number",
+					"default": 5,
+					"minimum": 1,
+					"maximum": 20,
+					"description": "扫描 git 仓库时的最大递归深度，避免扫描过深导致性能问题。"
+				}
+			}
+		},
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "workspace-mange",
+					"title": "工作区",
+					"icon": "resources/icon.svg"
+				}
+			]
+		},
+		"views": {
+			"workspace-mange": [
+				{
+					"id": "workspace-mange-view",
+					"name": "项目列表",
+					"type": "tree",
+					"visibility": "visible"
+				}
+			]
+		},
+		"commands": [
+			{
+				"command": "workspace-mange.addDirectory",
+				"title": "添加"
+			},
+			{
+				"command": "workspace-mange.addGroup",
+				"title": "新建分组"
+			},
+			{
+				"command": "workspace-mange.reload",
+				"title": "刷新"
+			},
+			{
+				"command": "workspace-mange.removeDirectory",
+				"title": "删除"
+			},
+			{
+				"command": "workspace-mange.openDirectory",
+				"title": "打开"
+			},
+			{
+				"command": "workspace-mange.moveToGroup",
+				"title": "移动到分组"
+			},
+			{
+				"command": "workspace-mange.moveSelectedToGroup",
+				"title": "批量移入分组"
+			},
+			{
+				"command": "workspace-mange.renameGroup",
+				"title": "重命名分组"
+			},
+			{
+				"command": "workspace-mange.removeGroup",
+				"title": "删除分组"
+			},
+			{
+				"command": "workspace-mange.editName",
+				"title": "编辑名称"
+			},
+			{
+				"command": "workspace-mange.editPath",
+				"title": "编辑路径"
+			},
+			{
+				"command": "workspace-mange.upDirectory",
+				"title": "上移"
+			},
+			{
+				"command": "workspace-mange.downDirectory",
+				"title": "下移"
+			},
+			{
+				"command": "workspace-mange.scanGitRepos",
+				"title": "扫描 Git 目录"
+			}
+		],
+		"menus": {
+			"view/title": [
+				{
+					"command": "workspace-mange.addDirectory",
+					"when": "view == workspace-mange-view",
+					"group": "navigation"
+				},
+				{
+					"command": "workspace-mange.addGroup",
+					"when": "view == workspace-mange-view",
+					"group": "navigation"
+				},
+				{
+					"command": "workspace-mange.reload",
+					"when": "view == workspace-mange-view",
+					"group": "navigation"
+				},
+				{
+					"command": "workspace-mange.moveSelectedToGroup",
+					"when": "view == workspace-mange-view",
+					"group": "navigation"
+				},
+				{
+					"command": "workspace-mange.scanGitRepos",
+					"when": "view == workspace-mange-view",
+					"group": "navigation"
+				}
+			],
+			"view/item/context": [
+				{
+					"command": "workspace-mange.addDirectory",
+					"when": "view == workspace-mange-view && viewItem == group",
+					"group": "1_actions@1"
+				},
+				{
+					"command": "workspace-mange.addGroup",
+					"when": "view == workspace-mange-view && viewItem == group",
+					"group": "1_actions@2"
+				},
+				{
+					"command": "workspace-mange.renameGroup",
+					"when": "view == workspace-mange-view && viewItem == group",
+					"group": "1_actions@3"
+				},
+				{
+					"command": "workspace-mange.moveToGroup",
+					"when": "view == workspace-mange-view && viewItem == group",
+					"group": "1_actions@4"
+				},
+				{
+					"command": "workspace-mange.removeGroup",
+					"when": "view == workspace-mange-view && viewItem == group",
+					"group": "1_actions@5"
+				},
+				{
+					"command": "workspace-mange.upDirectory",
+					"when": "view == workspace-mange-view && viewItem == group",
+					"group": "1_actions@6"
+				},
+				{
+					"command": "workspace-mange.downDirectory",
+					"when": "view == workspace-mange-view && viewItem == group",
+					"group": "1_actions@7"
+				},
+				{
+					"command": "workspace-mange.openDirectory",
+					"when": "view == workspace-mange-view && viewItem == directory",
+					"group": "1_actions@1"
+				},
+				{
+					"command": "workspace-mange.moveToGroup",
+					"when": "view == workspace-mange-view && viewItem == directory",
+					"group": "1_actions@2"
+				},
+				{
+					"command": "workspace-mange.moveSelectedToGroup",
+					"when": "view == workspace-mange-view && viewItem == directory",
+					"group": "1_actions@3"
+				},
+				{
+					"command": "workspace-mange.editName",
+					"when": "view == workspace-mange-view && viewItem == directory",
+					"group": "1_actions@3"
+				},
+				{
+					"command": "workspace-mange.editPath",
+					"when": "view == workspace-mange-view && viewItem == directory",
+					"group": "1_actions@4"
+				},
+				{
+					"command": "workspace-mange.removeDirectory",
+					"when": "view == workspace-mange-view && viewItem == directory",
+					"group": "1_actions@5"
+				},
+				{
+					"command": "workspace-mange.upDirectory",
+					"when": "view == workspace-mange-view && viewItem == directory",
+					"group": "1_actions@6"
+				},
+				{
+					"command": "workspace-mange.downDirectory",
+					"when": "view == workspace-mange-view && viewItem == directory",
+					"group": "1_actions@7"
+				}
+			]
+		}
+	},
+	"devDependencies": {
+		"vsce": "^2.15.0",
+		"@types/vscode": "^1.80.0"
+	},
+	"__metadata": {
+		"id": "4f2202e6-a461-40e6-a43c-b3e6620f13eb",
+		"publisherId": "2ae008df-d34d-4de7-acd5-d74c9d57b7b3",
+		"publisherDisplayName": "Liangxioa",
+		"targetPlatform": "undefined",
+		"isApplicationScoped": false,
+		"isPreReleaseVersion": false,
+		"hasPreReleaseVersion": false,
+		"installedTimestamp": 1738716662595,
+		"pinned": false,
+		"preRelease": false,
+		"source": "gallery",
+		"size": 18575
+	}
+}
